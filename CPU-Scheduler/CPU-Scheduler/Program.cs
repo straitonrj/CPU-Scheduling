@@ -37,7 +37,7 @@ static class Algorithm{
             processes[i] = new MyProcess(i+1, arrivalTime, burstTime);
         }
         var sorted = processes.OrderBy(MyProcess => MyProcess.arrivalTime).ToArray();
-
+        //testing that array was sorted correctly
         /*Console.WriteLine("Now printing unsorted array");
         for(int i=0;i<processes.Length;i++){
             Console.WriteLine(processes[i].arrivalTime);
@@ -50,6 +50,7 @@ static class Algorithm{
 
         int currentTime =0;
         int completed =0;
+        //loop to begin executing the algorithm
         while(completed < numberOfProcesses){
             int idx = -1;
             for(int i=0;i<numberOfProcesses;i++){
@@ -83,10 +84,65 @@ static class Algorithm{
         Console.WriteLine("Avg WT: "+ totalWT/numberOfProcesses + " Avg TAT: "+ totalTAT/numberOfProcesses);
     }
 
+    //Multi-Level Feedback Queue
+    public static void mlfqAlgorithm(){
+        Queue first = new Queue();
+        Queue second = new Queue();
+        Queue third = new Queue();
+        Queue fourth = new Queue();
+
+        Queue[] queues = {first, second, third, fourth};
+        Console.WriteLine("Enter a number of processes to run: ");
+        int numberOfProcesses = Convert.ToInt32(Console.ReadLine());
+        MyProcess[] processes = new MyProcess[numberOfProcesses];
+        
+        //Loop to fill the array of processes
+        for(int i=0;i<numberOfProcesses;i++){
+            Console.Write("Enter the arrival time for this Process: ");
+            int arrivalTime=Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Enter the burst time for this Process : ");
+            int burstTime = Convert.ToInt32(Console.ReadLine());
+
+            processes[i] = new MyProcess(i+1, arrivalTime, burstTime);
+        }
+        //new processes are assigned highest priority
+        foreach(MyProcess temp in processes){
+            queues[0].Enqueue(temp);
+        }
+        
+        //go through each queue
+        for(int i=0;i<queues.Length;i++){
+            //check if queue is empty, if it isn't execute first process
+            while(queues[i].Count > 0){
+                MyProcess tempProcess = (MyProcess)queues[i].Dequeue();
+                Console.WriteLine("Running process from queue: "+i+" with burst time: "+tempProcess.burstTime);
+                int timeSlice = 4;
+                if(tempProcess.burstTime < timeSlice){
+                    tempProcess.burstTime =0;
+                }
+                else{
+                    tempProcess.burstTime = tempProcess.burstTime -timeSlice;
+                }
+
+                //Move process to lower queue if not finished
+                if(tempProcess.burstTime > 0){
+                    if(i<3){
+                        queues[i+1].Enqueue(tempProcess);
+                    }
+                }
+                else{
+                    Console.WriteLine("Process completed");
+                }
+            }
+        }
+    
+
 }
 class Run{
     public static void Main(string[] args){
         Console.WriteLine("Hello, World!");
         Algorithm.strfAlgorithm();
     }
+}
 }
