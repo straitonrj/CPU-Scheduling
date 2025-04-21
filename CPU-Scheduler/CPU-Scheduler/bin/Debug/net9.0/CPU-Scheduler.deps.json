@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "CPU-Scheduler/1.0.0": {
+        "runtime": {
+          "CPU-Scheduler.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CPU-Scheduler/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

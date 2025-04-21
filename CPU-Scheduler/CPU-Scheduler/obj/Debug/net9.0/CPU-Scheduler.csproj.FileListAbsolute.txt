@@ -1,0 +1,15 @@
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/bin/Debug/net9.0/CPU-Scheduler
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/bin/Debug/net9.0/CPU-Scheduler.deps.json
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/bin/Debug/net9.0/CPU-Scheduler.runtimeconfig.json
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/bin/Debug/net9.0/CPU-Scheduler.dll
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/bin/Debug/net9.0/CPU-Scheduler.pdb
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/CPU-Scheduler.GeneratedMSBuildEditorConfig.editorconfig
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/CPU-Scheduler.AssemblyInfoInputs.cache
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/CPU-Scheduler.AssemblyInfo.cs
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/CPU-Scheduler.csproj.CoreCompileInputs.cache
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/CPU-Scheduler.sourcelink.json
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/CPU-Scheduler.dll
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/refint/CPU-Scheduler.dll
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/CPU-Scheduler.pdb
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/CPU-Scheduler.genruntimeconfig.cache
+/home/rj-straiton/CPU-Scheduler/CPU-Scheduling/CPU-Scheduler/CPU-Scheduler/obj/Debug/net9.0/ref/CPU-Scheduler.dll
