@@ -95,6 +95,10 @@ static class Algorithm{
         Console.WriteLine("Enter a number of processes to run: ");
         int numberOfProcesses = Convert.ToInt32(Console.ReadLine());
         MyProcess[] processes = new MyProcess[numberOfProcesses];
+        //when a process is complete it will be moved to a new queue to measure stuff at the end
+        Queue completedProcesses = new Queue();
+
+        int currentTime =0;
         
         //Loop to fill the array of processes
         for(int i=0;i<numberOfProcesses;i++){
@@ -116,13 +120,24 @@ static class Algorithm{
             //check if queue is empty, if it isn't execute first process
             while(queues[i].Count > 0){
                 MyProcess tempProcess = (MyProcess)queues[i].Dequeue();
-                Console.WriteLine("Running process from queue: "+i+" with burst time: "+tempProcess.burstTime);
+                Console.WriteLine("Running process: "+tempProcess.id+" from queue: "+i+" with burst time: "+tempProcess.burstTime);
                 int timeSlice = 4;
-                if(tempProcess.burstTime < timeSlice){
+                //If process completes
+                if(tempProcess.burstTime <= timeSlice){
+                    currentTime += tempProcess.burstTime;
                     tempProcess.burstTime =0;
+                    tempProcess.remainingTime =0;
+                    //Update info and add to completed processes queue
+                    tempProcess.completionTime = currentTime;
+                    tempProcess.turnaroundTime = currentTime - tempProcess.arrivalTime;
+                    tempProcess.waitingTime = tempProcess.turnaroundTime - tempProcess.arrivalTime;
+                    completedProcesses.Enqueue(tempProcess);
                 }
                 else{
+                    currentTime +=4;
                     tempProcess.burstTime = tempProcess.burstTime -timeSlice;
+                    tempProcess.remainingTime = tempProcess.burstTime;
+                    tempProcess.completionTime = currentTime;
                 }
 
                 //Move process to lower queue if not finished
@@ -132,14 +147,22 @@ static class Algorithm{
                     }
                 }
                 else{
-                    Console.WriteLine("Process completed");
+                    Console.WriteLine("Process: "+tempProcess.id+" completed\n");
                 }
                 if(AllQueuesEmpty(queues)){
                     break;
                 } 
             }
         }
-          
+        double totalWT =0;
+        double totalTAT =0;
+        //printing out measurable info
+        foreach (MyProcess temp in completedProcesses){
+            totalWT += temp.waitingTime;
+            totalTAT += temp.turnaroundTime;
+            Console.WriteLine("Process "+temp.id+" CT: "+temp.completionTime+" WT: "+temp.waitingTime+" TAT: "+temp.turnaroundTime);
+        }
+        Console.WriteLine("Avg WT: "+totalWT/numberOfProcesses+" Avg TAT: "+totalTAT/numberOfProcesses);
     }
     //check to make sure all queues are empty
     public static bool AllQueuesEmpty(Queue[] queues){
@@ -150,13 +173,30 @@ static class Algorithm{
         }
         return true;
     }
+    //Measuring Avg WT TAT for mlfq
 }
 class Run{
     public static void Main(string[] args){
-        //Console.WriteLine("Hello, World!");
+        int userInput=0;
+        while(userInput !=3){
+            Console.WriteLine("\nWhat would you like to do?\n1) Shortest Time Remaining First (STRF)\n2)Multi-Level Feedback Queue (MLFQ)\n3) Exit");
+            userInput = Convert.ToInt32(Console.ReadLine());
+
+            switch(userInput){
+                case 1: 
+                    Algorithm.strfAlgorithm();
+                break;
+
+                case 2: 
+                    Algorithm.mlfqAlgorithm();
+                break;
+
+                case 3:
+                    Console.WriteLine("Exiting program");
+                break;
+            }
+        }
         
-        //Algorithm.strfAlgorithm();
-        Algorithm.mlfqAlgorithm();
     }
 }
 
