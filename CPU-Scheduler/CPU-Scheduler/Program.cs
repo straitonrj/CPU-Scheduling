@@ -81,7 +81,7 @@ static class Algorithm{
             totalTAT += temp.turnaroundTime;
             Console.WriteLine("Process "+ temp.id+" CT: "+temp.completionTime+" WT: "+temp.waitingTime+" TAT: "+temp.turnaroundTime);
         }
-        Console.WriteLine("Avg WT: "+ totalWT/numberOfProcesses + " Avg TAT: "+ totalTAT/numberOfProcesses);
+        Console.WriteLine("Avg WT: "+ totalWT/numberOfProcesses + " Avg TAT: "+ totalTAT/numberOfProcesses+" Throughput "+(double)numberOfProcesses/currentTime);
     }
 
     //Multi-Level Feedback Queue
@@ -162,7 +162,7 @@ static class Algorithm{
             totalTAT += temp.turnaroundTime;
             Console.WriteLine("Process "+temp.id+" CT: "+temp.completionTime+" WT: "+temp.waitingTime+" TAT: "+temp.turnaroundTime);
         }
-        Console.WriteLine("Avg WT: "+totalWT/numberOfProcesses+" Avg TAT: "+totalTAT/numberOfProcesses);
+        Console.WriteLine("Avg WT: "+totalWT/numberOfProcesses+" Avg TAT: "+totalTAT/numberOfProcesses + " Throughput: "+(double)numberOfProcesses/currentTime);
     }
     //check to make sure all queues are empty
     public static bool AllQueuesEmpty(Queue[] queues){
@@ -173,7 +173,6 @@ static class Algorithm{
         }
         return true;
     }
-    //Measuring Avg WT TAT for mlfq
 }
 class Run{
     public static void Main(string[] args){
