@@ -134,15 +134,29 @@ static class Algorithm{
                 else{
                     Console.WriteLine("Process completed");
                 }
+                if(AllQueuesEmpty(queues)){
+                    break;
+                } 
             }
         }
-    
-
+          
+    }
+    //check to make sure all queues are empty
+    public static bool AllQueuesEmpty(Queue[] queues){
+        foreach(Queue temp in queues){
+            if(temp.Count > 0){
+                return false;
+            }
+        }
+        return true;
+    }
 }
 class Run{
     public static void Main(string[] args){
-        Console.WriteLine("Hello, World!");
-        Algorithm.strfAlgorithm();
+        //Console.WriteLine("Hello, World!");
+        
+        //Algorithm.strfAlgorithm();
+        Algorithm.mlfqAlgorithm();
     }
 }
-}
+
