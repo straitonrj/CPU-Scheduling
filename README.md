@@ -35,4 +35,4 @@ project's scope includes measuring key performance metrics for each algorithm. T
 ## Final Video Presentation 
 
 ## License
-This project is licensed under the terms of the [MIT license](https://choosealicense.com/licenses/mit/).
+This project is licensed under the terms of the [GNU General Public License v3.0](LICENSE).
