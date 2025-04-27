@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System.Collections;
+﻿using System.Collections;
 using System.Diagnostics;
 using System;
 
@@ -84,6 +83,45 @@ static class Algorithm{
         Console.WriteLine("Avg WT: "+ totalWT/numberOfProcesses + " Avg TAT: "+ totalTAT/numberOfProcesses+" Throughput "+(double)numberOfProcesses/currentTime);
     }
 
+    //STRF that takes in test values
+    public static void strfAlgorithm(MyProcess[] processes){
+        int numberOfProcesses = 5;
+        int currentTime =0;
+        int completed =0;
+        //loop to begin executing the algorithm
+        while(completed < numberOfProcesses){
+            int idx = -1;
+            for(int i=0;i<numberOfProcesses;i++){
+                if(processes[i].arrivalTime <= currentTime && processes[i].remainingTime > 0 && (idx == -1 || processes[i].remainingTime < processes[idx].remainingTime)){
+                    idx = i;
+                }
+            }
+            if(idx!=-1){
+                processes[idx].remainingTime--;
+                currentTime++;
+                if (processes[idx].remainingTime==0){
+                    processes[idx].completionTime = currentTime;
+                    processes[idx].turnaroundTime = currentTime - processes[idx].arrivalTime;
+                    processes[idx].waitingTime = processes[idx].turnaroundTime - processes[idx].burstTime;
+                    completed++;
+                }
+            }
+            else{
+                currentTime++;
+            }
+        }
+
+        double totalWT =0;
+        double totalTAT = 0;
+        foreach (MyProcess temp in processes){
+        
+            totalWT += temp.waitingTime;
+            totalTAT += temp.turnaroundTime;
+            Console.WriteLine("Process "+ temp.id+" CT: "+temp.completionTime+" WT: "+temp.waitingTime+" TAT: "+temp.turnaroundTime);
+        }
+        Console.WriteLine("Avg WT: "+ totalWT/numberOfProcesses + " Avg TAT: "+ totalTAT/numberOfProcesses+" Throughput "+(double)numberOfProcesses/currentTime);
+    }
+    
     //Multi-Level Feedback Queue
     public static void mlfqAlgorithm(){
         Queue first = new Queue();
@@ -119,7 +157,7 @@ static class Algorithm{
         for(int i=0;i<queues.Length;i++){
             //check if queue is empty, if it isn't execute first process
             while(queues[i].Count > 0){
-                MyProcess tempProcess = (MyProcess)queues[i].Dequeue();
+                MyProcess tempProcess = (MyProcess)queues[i].Peek();
                 Console.WriteLine("Running process: "+tempProcess.id+" from queue: "+i+" with burst time: "+tempProcess.burstTime);
                 int timeSlice = 4;
                 //If process completes
@@ -132,6 +170,7 @@ static class Algorithm{
                     tempProcess.turnaroundTime = currentTime - tempProcess.arrivalTime;
                     tempProcess.waitingTime = tempProcess.turnaroundTime - tempProcess.arrivalTime;
                     completedProcesses.Enqueue(tempProcess);
+                    queues[i].Dequeue();
                 }
                 else{
                     currentTime +=4;
@@ -144,6 +183,7 @@ static class Algorithm{
                 if(tempProcess.burstTime > 0){
                     if(i<3){
                         queues[i+1].Enqueue(tempProcess);
+                        queues[i].Dequeue();
                     }
                 }
                 else{
@@ -160,7 +200,77 @@ static class Algorithm{
         foreach (MyProcess temp in completedProcesses){
             totalWT += temp.waitingTime;
             totalTAT += temp.turnaroundTime;
-            Console.WriteLine("Process "+temp.id+" CT: "+temp.completionTime+" WT: "+temp.waitingTime+" TAT: "+temp.turnaroundTime);
+            Console.WriteLine("Process: "+temp.id+" CT: "+temp.completionTime+" WT: "+temp.waitingTime+" TAT: "+temp.turnaroundTime);
+        }
+        Console.WriteLine("Avg WT: "+totalWT/numberOfProcesses+" Avg TAT: "+totalTAT/numberOfProcesses + " Throughput: "+(double)numberOfProcesses/currentTime);
+    }
+
+    public static void mlfqAlgorithm(MyProcess[] processes){
+        Queue first = new Queue();
+        Queue second = new Queue();
+        Queue third = new Queue();
+        Queue fourth = new Queue();
+
+        Queue[] queues = {first, second, third, fourth};
+        int numberOfProcesses = 5;
+        //when a process is complete it will be moved to a new queue to measure stuff at the end
+        Queue completedProcesses = new Queue();
+
+        int currentTime =0;
+        
+        //new processes are assigned highest priority
+        foreach(MyProcess temp in processes){
+            queues[0].Enqueue(temp);
+        }
+        
+        //go through each queue
+        for(int i=0;i<queues.Length;i++){
+            //check if queue is empty, if it isn't execute first process
+            while(queues[i].Count > 0){
+                MyProcess tempProcess = (MyProcess)queues[i].Peek();
+                Console.WriteLine("Running process: "+tempProcess.id+" from queue: "+i+" with burst time: "+tempProcess.burstTime);
+                int timeSlice = 4;
+                //If process completes
+                if(tempProcess.burstTime <= timeSlice){
+                    currentTime += tempProcess.burstTime;
+                    tempProcess.burstTime =0;
+                    tempProcess.remainingTime =0;
+                    //Update info and add to completed processes queue
+                    tempProcess.completionTime = currentTime;
+                    tempProcess.turnaroundTime = currentTime - tempProcess.arrivalTime;
+                    tempProcess.waitingTime = tempProcess.turnaroundTime - tempProcess.arrivalTime;
+                    completedProcesses.Enqueue(tempProcess);
+                    queues[i].Dequeue();
+                }
+                else{
+                    currentTime +=4;
+                    tempProcess.burstTime = tempProcess.burstTime -timeSlice;
+                    tempProcess.remainingTime = tempProcess.burstTime;
+                    tempProcess.completionTime = currentTime;
+                }
+
+                //Move process to lower queue if not finished
+                if(tempProcess.burstTime > 0){
+                    if(i<3){
+                        queues[i+1].Enqueue(tempProcess);
+                        queues[i].Dequeue();
+                    }
+                }
+                else{
+                    Console.WriteLine("Process: "+tempProcess.id+" completed\n");
+                }
+                if(AllQueuesEmpty(queues)){
+                    break;
+                } 
+            }
+        }
+        double totalWT =0;
+        double totalTAT =0;
+        //printing out measurable info
+        foreach (MyProcess temp in completedProcesses){
+            totalWT += temp.waitingTime;
+            totalTAT += temp.turnaroundTime;
+            Console.WriteLine("Process: "+temp.id+" CT: "+temp.completionTime+" WT: "+temp.waitingTime+" TAT: "+temp.turnaroundTime);
         }
         Console.WriteLine("Avg WT: "+totalWT/numberOfProcesses+" Avg TAT: "+totalTAT/numberOfProcesses + " Throughput: "+(double)numberOfProcesses/currentTime);
     }
@@ -176,9 +286,18 @@ static class Algorithm{
 }
 class Run{
     public static void Main(string[] args){
+        //Test values
+        MyProcess temp0 = new MyProcess(1, 0, 8);
+        MyProcess temp1 = new MyProcess(2, 1, 4);
+        MyProcess temp2 = new MyProcess(3, 2, 10);
+        MyProcess temp3 = new MyProcess(4, 5, 3);
+        MyProcess temp4 = new MyProcess(5, 8, 22);        
+        MyProcess[] testValues = {temp0, temp1, temp2, temp3, temp4};
+
+        //Main menu
         int userInput=0;
-        while(userInput !=3){
-            Console.WriteLine("\nWhat would you like to do?\n1) Shortest Time Remaining First (STRF)\n2)Multi-Level Feedback Queue (MLFQ)\n3) Exit");
+        while(userInput !=5){
+            Console.WriteLine("\nWhat would you like to do?\n1) Shortest Time Remaining First (STRF)\n2) Multi-Level Feedback Queue (MLFQ)\n3) STRF Test Values\n4) MLFQ Test Values\n5) Exit");
             userInput = Convert.ToInt32(Console.ReadLine());
 
             switch(userInput){
@@ -191,6 +310,14 @@ class Run{
                 break;
 
                 case 3:
+                    Algorithm.strfAlgorithm(testValues);
+                break;
+
+                case 4:
+                    Algorithm.mlfqAlgorithm(testValues);
+                break;
+
+                case 5:
                     Console.WriteLine("Exiting program");
                 break;
             }
