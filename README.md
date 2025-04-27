@@ -19,8 +19,15 @@ project's scope includes measuring key performance metrics for each algorithm. T
 - [License](#license)
 
 ## Building and Running the Program
+- [Install .Net 8.0 for Linux](https://dotnet.microsoft.com/en-us/download)
+- Clone this repository
+- Open up the terminal
+- Navigate to the directory where you have installed the CPU-Scheduling project
+- Once inside the CPU-Scheduling project, type "dotnet run" into the terminal and press enter
+- You should see a small menu pop up, prompting you for an input
 
 ## Report
+- [Click here to view the report for this project](./CPUSchedulingReport.pdf)
 
 ## Final Video Presentation 
 
