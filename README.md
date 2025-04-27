@@ -19,7 +19,7 @@ project's scope includes measuring key performance metrics for each algorithm. T
 - [License](#license)
 
 ## Code
-- [Click here to view the code for this project](CPU-Scheduler/CPU-Scheduler/obj/Algorithms.cs)
+- [Click here to view the code for this project](CPU-Scheduler/CPU-Scheduler/Program.cs)
 
 ## Building and Running the Program
 - [Install .Net 8.0 for Linux](https://dotnet.microsoft.com/en-us/download)
