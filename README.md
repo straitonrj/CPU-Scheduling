@@ -12,10 +12,14 @@ project's scope includes measuring key performance metrics for each algorithm. T
 - Throughput (Processes per Second)
  
 ## Table of Contents
+- [Code](#code)
 - [Building and Running the Program](#building-and-running-the-program)
 - [Report](#report)
 - [Final Video Presentation](#final-video-presentation)
 - [License](#license)
+
+## Code
+- [Click here to view the code for this project](CPU-Scheduler/CPU-Scheduler/obj/Algorithms.cs)
 
 ## Building and Running the Program
 - [Install .Net 8.0 for Linux](https://dotnet.microsoft.com/en-us/download)
