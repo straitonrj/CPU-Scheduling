@@ -33,6 +33,7 @@ project's scope includes measuring key performance metrics for each algorithm. T
 - [Click here to view the report for this project](./CPUSchedulingReport.pdf)
 
 ## Final Video Presentation 
+- [Click here to view the video presentation for this project](https://youtu.be/jKScg94mmoA)
 
 ## License
 This project is licensed under the terms of the [GNU General Public License v3.0](LICENSE).
